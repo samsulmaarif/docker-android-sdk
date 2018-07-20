@@ -15,12 +15,15 @@ RUN wget --quiet --output-document=android-sdk.zip https://dl.google.com/android
 RUN unzip android-sdk.zip
 RUN mkdir /root/.android/
 RUN touch /root/.android/repositories.cfg
-RUN echo y | tools/bin/sdkmanager --update
+RUN echo y | /sdk/tools/bin/sdkmanager --update
+RUN echo y | /sdk/tools/bin/sdkmanager --licenses
+RUN /sdk/tools/bin/sdkmanager "platform-tools" "platforms;android-26"
+
 
 RUN wget --quiet --output-document=gradle.zip https://services.gradle.org/distributions/gradle-4.4-bin.zip
 RUN unzip gradle.zip
 
-ENV ANDROID_HOME=/sdk/tools
+ENV ANDROID_HOME=/sdk/
 ENV PATH=$PATH:/sdk/tools/platform-tools/
 ENV PATH=$PATH:/sdk/gradle-4.4/bin
 
